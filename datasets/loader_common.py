@@ -435,7 +435,7 @@ def download_raw_data(
         for split_data_path in split_data_path_list:
             shutil.copytree(split_data_path, test_data_path, dirs_exist_ok=True)
 
-    if data_type == "eval":
+    if data_type == "eval" and dir_name == "test":
         rename_wav(
             dataset_parent_dir=root,
             dataset_type=dataset,
@@ -493,6 +493,7 @@ YAML_PATH = {
     "DCASE2025T2_dev":"datasets/machine_type_2025_dev.yaml",
     "DCASE2025T2_eval":"datasets/machine_type_2025_eval.yaml",
     "DCASE2026T2_dev":"datasets/machine_type_2026_dev.yaml",
+    "DCASE2026T2_eval":"datasets/machine_type_2026_eval.yaml",
 }
 
 def get_machine_type_dict(dataset_name, mode=True):
@@ -512,6 +513,8 @@ def get_machine_type_dict(dataset_name, mode=True):
         yaml_path = YAML_PATH["DCASE2025T2_eval"]
     elif dataset_name == "DCASE2026T2" and mode:
         yaml_path = YAML_PATH["DCASE2026T2_dev"]
+    elif dataset_name == "DCASE2026T2" and not mode:
+        yaml_path = YAML_PATH["DCASE2026T2_eval"]
     else: 
         raise KeyError()
     
