@@ -1,0 +1,23 @@
+docker run -it \
+  -v $(pwd):/app \
+  -v /media/david/Work/datasets/sound:/app/data \
+  dcase2026t2
+
+docker run -it \
+  -v $(pwd):/app \
+  -v /media/david/Work/datasets/sound:/data \
+  dcase2026t2
+
+# 添加源
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+
+curl -s -L https://nvidia.github.io/libnvidia-container/gpgkey | sudo apt-key add -
+
+curl -s -L https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list | sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+
+# 安装
+sudo apt update
+sudo apt install -y nvidia-container-toolkit
+
+# 重启 docker
+sudo systemctl restart docker
